@@ -23,13 +23,13 @@ public class Evidence {
     //constructor
     public Evidence()
     {
-        this.evMed = new ArrayList<Medic>();
-        this.evCli = new ArrayList<Client>();
-        this.evCard = new ArrayList<Cardiolog>();
-        this.evOnc = new ArrayList<Oncolog>();
-        this.evAdmin = new ArrayList<Administrator>();
-        this.evAf = new HashSet<Afectiune>();
-        this.evApp = new HashSet<Appointment>();
+        this.evMed = new ArrayList<>();
+        this.evCli = new ArrayList<>();
+        this.evCard = new ArrayList<>();
+        this.evOnc = new ArrayList<>();
+        this.evAdmin = new ArrayList<>();
+        this.evAf = new HashSet<>();
+        this.evApp = new HashSet<>();
     }
 
     //getters
