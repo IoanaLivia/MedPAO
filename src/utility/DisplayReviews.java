@@ -1,10 +1,6 @@
 package utility;
 import entities.Review;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Collections;
-
 public abstract class DisplayReviews {
     private static Review[] arrRev = new Review[1000];
     private static int index = 0;
