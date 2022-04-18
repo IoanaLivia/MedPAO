@@ -17,8 +17,6 @@ public class Evidence {
     private ArrayList<Administrator> evAdmin;
     private Set<Afectiune> evAf ;
     private Set<Appointment> evApp ;
-    private ArrayList<Appointment> evAppArr;
-    private ArrayList<Afectiune> evfArr;
 
     //constructor
     public Evidence()
@@ -145,14 +143,14 @@ public class Evidence {
 
     //sorts evApp (set) by date in descending order
     public ArrayList<Appointment> sortedEvApp() {
-        ArrayList<Appointment> evAppArr  = new ArrayList<Appointment>(evApp);
+        ArrayList<Appointment> evAppArr  = new ArrayList<>(evApp);
         Collections.sort(evAppArr);
         return evAppArr;
     }
 
     //sorts evAf (set) by grade of risc in ascending order
     public ArrayList<Afectiune> sortedEvAf() {
-        ArrayList<Afectiune> evAfArr = new ArrayList<Afectiune>(evAf);
+        ArrayList<Afectiune> evAfArr = new ArrayList<>(evAf);
         Collections.sort(evAfArr);
         return evAfArr;
     }
