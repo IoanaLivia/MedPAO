@@ -3,16 +3,16 @@ package interfaces;
 public interface IPrintText {
 
     //Introduction
-    public static void printIntroduction(){
+    static void printIntroduction(){
         System.out.print("Thank you for choosing MedPAO! Before you begin to test the app, we have an optional feature that consists in a demo database.\n");
         System.out.print("By opting for it, data from a predefined demo database will be inserted in the records of the current session.\n");
         System.out.print("Therefore, you will be able to test the functionalities on the predefined data. However, you will still be able to insert new data.\n");
         System.out.print("If you would like to start off with this feature, type 'Yes'. If not, type 'No'. Kind regards!\n");
         System.out.print("PLEASE: Check the Help section first. It gives info on all the current functionalities of the app.\n");
-    };
+    }
 
     //Help
-    public static void printHelp(){
+    static void printHelp(){
         System.out.print("Welcome to the Help section. Here are the basics of MedPAO and how to use it.\n");
         System.out.print("\n");
         System.out.print("-----------------------------Functionalities---------------------------------\n");
@@ -82,17 +82,17 @@ public interface IPrintText {
         System.out.print("Please enter valid numbers for dates (year, month, day).\n");
         System.out.print("\n");
 
-    };
+    }
 
     //Story
-    public static void printStory(){
+    static void printStory(){
         System.out.print("Glad you showed intrest in MedPAO's story!.\n");
         System.out.print("\n");
         System.out.print("Our journey began a few years ago. We started off by involving in many start-up's regarding med. \n");
-    };
+    }
 
     //ToBeImplemented
-    public static void printToBe(){
+    static void printToBe(){
         System.out.println("We are considering implementing: ");
         System.out.println("Implement methods to check all of the inputs.");
         System.out.println("Email adress for Client, Medic, Cardiologist, Oncologist.");
@@ -100,13 +100,13 @@ public interface IPrintText {
         System.out.println("Reformating Date.");
         System.out.println("Nurse / Specialist classes.");
 
-    };
+    }
 
     //ErrorLogin
-    public static void printLogErr(){
+    static void printLogErr(){
         System.out.print("Your login has not been validated. Would you like to try again or go back to the main menu?\n");
         System.out.print("1: Try Again. \n");
         System.out.print("2: Go back to the main menu\n");
-    };
+    }
 
 }

@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public interface ILoginConnect {
 
-    public static void loginClient() {
+    static void loginClient() {
         if(IGeneral.existsCli(ILoginInput.inputLogCli())){
             System.out.print("Your login has been validated. What would you like to do next?\n");
         }
@@ -23,9 +23,9 @@ public interface ILoginConnect {
             }
         }
 
-    };
+    }
 
-    public static void loginMedic() {
+    static void loginMedic() {
         Scanner scanner;
         scanner = new Scanner(System.in);
 
@@ -49,9 +49,9 @@ public interface ILoginConnect {
             }
         }
 
-    };
+    }
 
-    public static void loginCard() {
+    static void loginCard() {
         Scanner scanner;
         scanner = new Scanner(System.in);
 
@@ -75,9 +75,9 @@ public interface ILoginConnect {
             }
         }
 
-    };
+    }
 
-    public static void loginOnc() {
+    static void loginOnc() {
         Scanner scanner;
         scanner = new Scanner(System.in);
 
@@ -101,9 +101,9 @@ public interface ILoginConnect {
             }
         }
 
-    };
+    }
 
-    public static void loginAdmin() {
+    static void loginAdmin() {
         Scanner scanner;
         scanner = new Scanner(System.in);
 
@@ -127,5 +127,5 @@ public interface ILoginConnect {
             }
         }
 
-    };
+    }
 }

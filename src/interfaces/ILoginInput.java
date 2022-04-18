@@ -7,7 +7,7 @@ import java.util.Scanner;
 public interface ILoginInput {
 
     //InputClient
-    public static Client inputLogCli() {
+    static Client inputLogCli() {
         Scanner scanner;
         scanner = new Scanner(System.in);
         System.out.print("Please enter the following information: \n");
@@ -24,10 +24,10 @@ public interface ILoginInput {
         String id = scanner.nextLine();
 
         return new Client(name, surname, age, id);
-    };
+    }
 
     //InputMedic
-    public static Medic inputLogMed() {
+    static Medic inputLogMed() {
         Scanner scanner;
         scanner = new Scanner(System.in);
         System.out.print("Please enter the following information: \n");
@@ -58,10 +58,10 @@ public interface ILoginInput {
         int day = scanner.nextInt();
 
         return new Medic(name, surname, age, id, domain, year, month, day);
-    };
+    }
 
     //InputCardiologist
-    public  static Cardiolog inputLogCard(){
+    static Cardiolog inputLogCard(){
         System.out.println("Please enter the following information:");
         Scanner scanner;
         scanner = new Scanner(System.in);
@@ -96,10 +96,10 @@ public interface ILoginInput {
 
         return new Cardiolog(name, surname, age, id, domain, year, month, day, nrSurgeries);
 
-    };
+    }
 
     //InputOncologist
-    public  static Oncolog inputLogOnc(){
+    static Oncolog inputLogOnc(){
         System.out.println("Please enter the following information:");
         Scanner scanner;
         scanner = new Scanner(System.in);
@@ -134,10 +134,10 @@ public interface ILoginInput {
 
         return new Oncolog(name, surname, age, id, domain, year, month, day, nrSurgeries);
 
-    };
+    }
 
     //InputAdmin
-    public  static Administrator inputLogAdmin() {
+    static Administrator inputLogAdmin() {
         System.out.print("Please enter the following information:\n");
         Scanner scanner;
         scanner = new Scanner(System.in);
@@ -145,12 +145,11 @@ public interface ILoginInput {
         System.out.println("Secret Code: ");
         String secretCode = scanner.nextLine();
 
-        Administrator a = new Administrator(secretCode);
-        return a;
-    };
+        return new Administrator(secretCode);
+    }
 
     //InputCondition (Afectiune)
-    public static Afectiune inputAf() {
+    static Afectiune inputAf() {
         System.out.println("Please enter the following information: ");
         Scanner scanner;
         scanner = new Scanner(System.in);
@@ -161,17 +160,17 @@ public interface ILoginInput {
         int gRisk = scanner.nextInt();
 
         return new Afectiune(name, gRisk);
-    };
+    }
 
     //InputReviews
-    public static Review inputRev() {
+    static Review inputRev() {
         System.out.println("Enter review:");
         Scanner scanner;
         scanner = new Scanner(System.in);
         System.out.println("Give a number of stars in the range of 1-5.");
         int grade = scanner.nextInt();
         return new Review(grade);
-    };
+    }
 
 
 }

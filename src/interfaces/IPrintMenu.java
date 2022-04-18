@@ -3,7 +3,7 @@ package interfaces;
 public interface IPrintMenu {
 
     //General menu
-    public static void printMenuGen(){
+    static void printMenuGen(){
         System.out.print("Here's MedPAO's general menu. Choose an option and press the corresponding numeric key.\n");
         System.out.print("1: Register.\n");
         System.out.print("2: Login.\n"); //partially
@@ -16,10 +16,10 @@ public interface IPrintMenu {
         System.out.print("9: Reviews.\n");
         System.out.print("10: Leave a review. \n");
         System.out.print("11: To be implemented/changed in the app. \n");
-    };
+    }
 
     //Registration menu
-    public static void printMenuReg(){
+    static void printMenuReg(){
         System.out.print("What would you want to register as? Pick an option and press the corresponding key.\n");
         System.out.print("1: Client.\n");
         System.out.print("2: Medic.\n");
@@ -28,29 +28,29 @@ public interface IPrintMenu {
         System.out.print("4: Oncologist.\n");
         System.out.print("For personnel: \n");
         System.out.print("5: Administrator\n");
-    };
+    }
 
     //Login Menu
-    public static void printMenuLogin(){
+    static void printMenuLogin(){
         System.out.print("What would you want to login as? Pick an option and press the corresponding key.\n");
         System.out.print("1: Client.\n");
         System.out.print("2: Medic.\n");
         System.out.print("3: Cardiologist.\n");
         System.out.print("4: Oncologist.\n");
         System.out.print("5: Administrator.\n");
-    };
+    }
 
     //Client menu
-    public static void printMenuClient(){
+    static void printMenuClient(){
         System.out.print("\n");
         System.out.print("Press the corresponding key of your choice:\n");
         System.out.print("1: Create new appointment.\n");
         System.out.print("2: Cancel an appointment.\n");
         System.out.print("3: Logout.\n");
-    };
+    }
 
     //Medic menu
-    public static void printMenuMedic(){
+    static void printMenuMedic(){
         System.out.print("\n");
         System.out.print("Press the corresponding key of your choice:\n");
         System.out.print("1: Create new appointment.\n");
@@ -58,20 +58,20 @@ public interface IPrintMenu {
         System.out.print("3: View current Client records.\n");
         System.out.print("4: View current Appointment records.\n");
         System.out.print("5: Logout.\n");
-    };
+    }
 
     //Cardiologist/Oncologist menu
-    public static void printMenuCardOnc(){
+    static void printMenuCardOnc(){
         System.out.print("\n");
         System.out.print("Press the corresponding key of your choice:\n");
         System.out.print("1: View current Client records.\n");
         System.out.print("2: View current Appointment records.\n");
         System.out.print("3: Logout.\n");
 
-    };
+    }
 
     //Admin menu
-    public static void printMenuAdmin(){
+    static void printMenuAdmin(){
         System.out.print("Currently admins benefit of the following. The menu will soon be updated.\n");
         System.out.print("1: Show all records.\n");
         System.out.print("2: Client records.\n");
@@ -109,6 +109,6 @@ public interface IPrintMenu {
         System.out.print("34: Check if Administrator exists.\n");
         System.out.print("35: Logout.\n");
 
-    };
+    }
 
 }

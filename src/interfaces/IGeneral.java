@@ -15,7 +15,7 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
     Adresa clinicAddress = new Adresa("Romania", "Bucuresti", "Strada PAO", "38290", 10);
     Evidence e = new Evidence();
 
-    public static boolean boot(){
+    static boolean boot(){
         IPrintText.printIntroduction();
 
         Scanner scanner;
@@ -31,9 +31,9 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
             return false;
         }
 
-    };
+    }
 
-    public static void next(){
+    static void next(){
         System.out.println("Would you like to go back to the main menu? If not, you'll be exit the session.");
         System.out.println("Press 1 for 'Yes' and 0 for 'No'.");
 
@@ -45,9 +45,9 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
             parseMenGenInput(getBeginOption());
         else
             System.out.print("Thank you for using our platform. See you soon!");
-    };
+    }
 
-    public static int getBeginOption(){
+    static int getBeginOption(){
         IPrintMenu.printMenuGen();
         Scanner scanner;
         scanner = new Scanner(System.in);
@@ -60,10 +60,10 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
         {
             return option;
         }
-    };
+    }
 
 
-    public static void parseMenGenInput(int option){
+    static void parseMenGenInput(int option){
         if(option == 2){
             IPrintMenu.printMenuLogin();
             Scanner scanner;
@@ -189,16 +189,16 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
             IPrintText.printToBe();
             next();
         }
-    };
+    }
 
-    public static void begin(){
+    static void begin(){
         int x = getBeginOption();
         if(x == -1) getBeginOption();
         else parseMenGenInput(x);
-    };
+    }
 
 
-    public static boolean existsCli(Client c){
+    static boolean existsCli(Client c){
         for(Client x: e.getEvCli()){
             if(c.equals(x))
             {
@@ -206,9 +206,9 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
             }
         }
         return false;
-    };
+    }
 
-    public static boolean existsMed(Medic m){
+    static boolean existsMed(Medic m){
         for(Medic x: e.getEvM()){
             if(m.equals(x))
             {
@@ -216,9 +216,9 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
             }
         }
         return false;
-    };
+    }
 
-    public static boolean existsOnc(Oncolog o){
+    static boolean existsOnc(Oncolog o){
         for(Oncolog x: e.getEvOnc()){
             if(o.equals(x))
             {
@@ -226,9 +226,9 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
             }
         }
         return false;
-    };
+    }
 
-    public static boolean existsCard(Cardiolog c){
+    static boolean existsCard(Cardiolog c){
         for(Cardiolog x: e.getEvCard()){
             if(c.equals(x))
             {
@@ -236,9 +236,9 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
             }
         }
         return false;
-    };
+    }
 
-    public static boolean existsAdmin(Administrator a){
+    static boolean existsAdmin(Administrator a){
         for(Administrator x: e.getEvAdmin()){
             if(a.equals(x))
             {
@@ -246,15 +246,15 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
             }
         }
         return false;
-    };
+    }
 
-    public static boolean existsAf(Afectiune a){
-        ArrayList<Afectiune> ar = new ArrayList<Afectiune>(e.getEvAf());
+    static boolean existsAf(Afectiune a){
+        ArrayList<Afectiune> ar = new ArrayList<>(e.getEvAf());
         for(Afectiune x: ar) {
             if(x.getName().equals(a.getName()) && x.getGradeRisk() == a.getGradeRisk()) return true;
         }
         return false;
-    };
+    }
 
 //    public static boolean existsApp(Appointment a){
 //        if(e.getEvApp().contains(a)) return true;
@@ -262,7 +262,7 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
 //    };
 
 
-    public static void newAppWAcc(){
+    static void newAppWAcc(){
         System.out.println("You opted to make a new appointment. Please follow the next steps.");
         Scanner scanner;
         scanner = new Scanner(System.in);
@@ -300,41 +300,41 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
         e.addNewApp(ap);
         e.addNewCli(ap.getClient());
 
-    };
+    }
 
-    public static void regClient(){
+    static void regClient(){
         e.addNewCli(ILoginInput.inputLogCli());
     }
 
-    public static void regMedic(){
+    static void regMedic(){
         e.addNewMed(ILoginInput.inputLogMed());
     }
 
-    public static void regCard(){
+    static void regCard(){
         e.addNewCard(ILoginInput.inputLogCard());
     }
 
-    public static void regOnc(){
+    static void regOnc(){
         e.addNewOnc(ILoginInput.inputLogOnc());
     }
 
-    public static void regAf(){
+    static void regAf(){
         e.addNewAf(ILoginInput.inputAf());
     }
 
-    public static void regAdmin(){
+    static void regAdmin(){
         e.addNewAdmin(ILoginInput.inputLogAdmin());
     }
 
-    public static void showAllRecords(){
+    static void showAllRecords(){
         e.printEvOnc();
         e.printEvCard();
-        e.printEvCli();;
+        e.printEvCli();
         e.printEvMed();
         e.printEvAdmin();
     }
 
-    public static int getClientOpt(){
+    static int getClientOpt(){
         Scanner scanner;
         scanner = new Scanner(System.in);
         int option = scanner.nextInt();
@@ -346,9 +346,9 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
         {
             return option;
         }
-    };
+    }
 
-    public static int getMedOpt(){
+    static int getMedOpt(){
         Scanner scanner;
         scanner = new Scanner(System.in);
         int option = scanner.nextInt();
@@ -360,8 +360,8 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
         {
             return option;
         }
-    };
-    public static int getAdminOpt(){
+    }
+    static int getAdminOpt(){
         Scanner scanner;
         scanner = new Scanner(System.in);
         int option = scanner.nextInt();
@@ -373,8 +373,9 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
         {
             return option;
         }
-    };
-    public static int getCardOncOpt(){
+    }
+
+    static int getCardOncOpt(){
         Scanner scanner;
         scanner = new Scanner(System.in);
         int option = scanner.nextInt();
@@ -386,9 +387,9 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
         {
             return option;
         }
-    };
+    }
 
-    public static void parseOptCardOnc(int option) {
+    static void parseOptCardOnc(int option) {
         if(option == 1){
             e.printEvCli();
             IPrintMenu.printMenuCardOnc();
@@ -402,9 +403,9 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
         if(option == 3){
             next();
         }
-    };
+    }
 
-    public static void parseOptClient(int option){
+    static void parseOptClient(int option){
         if(option == 1 || option == 2) {
             System.out.println("Please enter the appointment's info. ");
             Scanner scanner;
@@ -486,9 +487,9 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
         }
 
 
-    };
+    }
 
-    public static void parseOptMed(int option) {
+    static void parseOptMed(int option) {
         if(option == 3){
             e.printEvCli();
             IPrintMenu.printMenuMedic();
@@ -579,9 +580,9 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
             }
         }
 
-    };
+    }
 
-    public static void parseOptAdmin(int option) {
+    static void parseOptAdmin(int option) {
         if(option == 1) showAllRecords();
         if(option == 2) e.printEvCli();
         if(option == 3) e.printEvMed();
@@ -649,6 +650,6 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
         }
 
 
-    };
+    }
 
 }
