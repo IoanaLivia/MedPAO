@@ -1,7 +1,7 @@
 package utility;
 import entities.Review;
 
-public abstract class DisplayReviews {
+public class DisplayReviews {
     private static Review[] arrRev = new Review[1000];
     private static int index = 0;
 
@@ -13,7 +13,6 @@ public abstract class DisplayReviews {
         arrRev[index] = r;
         incrIndex();
     }
-
 
     public static void display() {
         index = 0;
