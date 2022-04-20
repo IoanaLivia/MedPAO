@@ -6,7 +6,7 @@ public interface IPrintMenu {
     static void printMenuGen(){
         System.out.print("Here's MedPAO's general menu. Choose an option and press the corresponding numeric key.\n");
         System.out.print("1: Register.\n");
-        System.out.print("2: Login.\n"); //partially
+        System.out.print("2: Login.\n");
         System.out.print("3: MedPAO's story.\n");
         System.out.print("4: Our team.\n");
         System.out.print("5: Register a new appointment without account.\n");
