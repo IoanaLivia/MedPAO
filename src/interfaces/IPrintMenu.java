@@ -57,7 +57,8 @@ public interface IPrintMenu {
         System.out.print("2: Cancel an appointment.\n");
         System.out.print("3: View current Client records.\n");
         System.out.print("4: View current Appointment records.\n");
-        System.out.print("5: Logout.\n");
+        System.out.print("5: Print CV.\n");
+        System.out.print("6: Logout.\n");
     }
 
     //Cardiologist/Oncologist menu

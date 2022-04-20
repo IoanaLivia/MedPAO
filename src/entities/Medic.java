@@ -1,6 +1,5 @@
 package entities;
 import struct.Date;
-import interfaces.IGeneral;
 import java.util.Objects;
 
 //era general la implement
@@ -88,18 +87,18 @@ public class Medic implements Comparable<Medic>{
                 '}';
     }
 
-    //function that generates CV
-    public String generateCV(){
-        int years_worked = 2022 - this.dateHired.getYear();
-        return "We are honored to present our fellow associate: " +
-                "Name : " + name + '\'' +
-                ", Surname : " + surname + '\'' +
-                ", Age: " + age +
-                ", CNP: " + id +
-                ", Domain: " + specialitate +
-                ", Years of experience at our company: " + years_worked +
-                '}';
-    }
+//    //function that generates CV
+//    public String generateCV(){
+//        int years_worked = 2022 - this.dateHired.getYear();
+//        return "We are honored to present our fellow associate: " +
+//                "Name : " + name + '\'' +
+//                ", Surname : " + surname + '\'' +
+//                ", Age: " + age +
+//                ", CNP: " + id +
+//                ", Domain: " + specialitate +
+//                ", Years of experience at our company: " + years_worked +
+//                '}';
+//    }
 
     @Override
     public boolean equals(Object o) {

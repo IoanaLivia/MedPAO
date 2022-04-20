@@ -352,7 +352,7 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
         Scanner scanner;
         scanner = new Scanner(System.in);
         int option = scanner.nextInt();
-        if(option < 1 || option > 5){
+        if(option < 1 || option > 6){
             System.out.println(ERROR_RANGE);
             return -1;
         }
@@ -501,6 +501,34 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
             parseOptMed(getMedOpt());
         }
         if(option == 5){
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+
+            System.out.println("Enter the medic id:");
+            String input = scanner.nextLine();
+
+            Medic medicc = new Medic("", "", 0, "", "", 0, 0,0);
+            System.out.println((e.getEvM()).size());
+
+            for (int i = 0; i < (e.getEvM()).size(); i++)
+            {
+                if((((e.getEvM()).get(i)).getId()).compareTo(input) == 0)
+                {
+                    medicc.setAge(((e.getEvM()).get(i)).getAge());
+                    medicc.setName(((e.getEvM()).get(i)).getName());
+                    medicc.setSurname(((e.getEvM()).get(i)).getSurname());
+                    medicc.setId(((e.getEvM()).get(i)).getId());
+                    medicc.setSpecialitate(((e.getEvM()).get(i)).getSpecialitate());
+                    medicc.setDateHired(((e.getEvM()).get(i)).getDateHired());
+                }
+            }
+
+            MedicService m = new MedicService();
+            System.out.println(m.generateCV(medicc));
+            IPrintMenu.printMenuMedic();
+            parseOptMed(getMedOpt());
+        }
+        if(option == 6){
             parseMenGenInput(getBeginOption());
         }
         if(option == 1 || option == 2) {
