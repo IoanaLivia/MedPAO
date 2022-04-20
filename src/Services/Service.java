@@ -1,20 +1,37 @@
-package user;
+package Services;
 
 import interfaces.IGeneral;
 import entities.*;
 import entities.specialists.*;
+import interfaces.IPrintText;
 
+import java.util.Scanner;
 
 public class Service implements IGeneral {
-
     public void start(){
-        if(IGeneral.boot()){
+        if(boot()){
             this.demo();
         }
         IGeneral.begin();
     }
 
-    //TO DO: de terminat
+    public boolean boot(){
+        IPrintText.printIntroduction();
+
+        Scanner scanner;
+        scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        System.out.println("\n");
+
+        if(input.equals("Yes")){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void demo(){
         //Clients
         Client c1 = new Client("Popescu", "Daniela", 30, "111");
@@ -60,7 +77,6 @@ public class Service implements IGeneral {
         IGeneral.e.addNewAdmin(new Administrator("admin2022"));
         IGeneral.e.addNewAdmin(new Administrator("admin2021"));
         IGeneral.e.addNewAdmin(new Administrator("admin2020"));
-
     }
 
 }

@@ -4,6 +4,7 @@ import evidences.Evidence;
 import entities.specialists.Cardiolog;
 import entities.specialists.Oncolog;
 import struct.Adresa;
+import Services.MedicService;
 import utility.DisplayReviews;
 
 import java.util.ArrayList;
@@ -15,23 +16,24 @@ public interface IGeneral extends IPrintMenu, IPrintText, ILoginInput {
     Adresa clinicAddress = new Adresa("Romania", "Bucuresti", "Strada PAO", "38290", 10);
     Evidence e = new Evidence();
 
-    static boolean boot(){
-        IPrintText.printIntroduction();
+    boolean boot();
 
-        Scanner scanner;
-        scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        System.out.println("\n");
+//        IPrintText.printIntroduction();
+//
+//        Scanner scanner;
+//        scanner = new Scanner(System.in);
+//        String input = scanner.nextLine();
+//        System.out.println("\n");
+//
+//        if(input.equals("Yes")){
+//            return true;
+//        }
+//        else
+//        {
+//            return false;
+//        }
 
-        if(input.equals("Yes")){
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
-    }
+//    }
 
     static void next(){
         System.out.println("Would you like to go back to the main menu? If not, you'll be exit the session.");

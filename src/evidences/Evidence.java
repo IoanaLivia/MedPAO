@@ -10,11 +10,11 @@ import entities.specialists.Oncolog;
 import java.util.*;
 
 public class Evidence {
-    private ArrayList<Medic> evMed;
-    private ArrayList<Client> evCli;
-    private ArrayList<Cardiolog> evCard;
-    private ArrayList<Oncolog> evOnc;
-    private ArrayList<Administrator> evAdmin;
+    private List<Medic> evMed;
+    private List<Client> evCli;
+    private List<Cardiolog> evCard;
+    private List<Oncolog> evOnc;
+    private List<Administrator> evAdmin;
     private Set<Afectiune> evAf ;
     private Set<Appointment> evApp ;
 
@@ -31,20 +31,20 @@ public class Evidence {
     }
 
     //getters
-    public ArrayList<Medic> getEvM()
+    public List<Medic> getEvM()
     {
         return evMed;
     }
-    public ArrayList<Client> getEvCli()
+    public List<Client> getEvCli()
     {
         return evCli;
     }
-    public ArrayList<Cardiolog> getEvCard()
+    public List<Cardiolog> getEvCard()
     {
         return evCard;
     }
-    public ArrayList<Oncolog> getEvOnc() { return evOnc;}
-    public ArrayList<Administrator> getEvAdmin() { return evAdmin;}
+    public List<Oncolog> getEvOnc() { return evOnc;}
+    public List<Administrator> getEvAdmin() { return evAdmin;}
     public Set<Afectiune> getEvAf() { return evAf; }
     public Set<Appointment> getEvApp() { return evApp;}
 
@@ -71,6 +71,7 @@ public class Evidence {
         evApp.add(a);
     }
 
+
     //empty() functions
     public void emptyEvMed(){
         evMed.removeAll(evMed);
@@ -78,6 +79,7 @@ public class Evidence {
     public void emptyEvCli(){
         evCli.removeAll(evCli);
     }
+
     public void emptyEvAdmin(){
         evAdmin.removeAll(evAdmin);
     }
