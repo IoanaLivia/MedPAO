@@ -452,7 +452,7 @@ public class Service implements IGeneral{
         System.out.print("33: Check if Condition (Afectiune) exists.\n");
         System.out.print("34: Check if Administrator exists.\n");
         System.out.print("35: Logout.\n");
-        System.out.print("36: Print records in Evidence csv file.\n");
+        System.out.print("36: Print records in Evidence csv files.\n");
 
     }
 
@@ -1080,6 +1080,9 @@ public class Service implements IGeneral{
         if(option == 3){
             audit.writeActionToFile("Prints Medic records");
             e.printEvMed();
+            //stream
+            System.out.println("Medics, filtered by the condition of being 32 years of age.");
+            PrintMedicsofCertainAge(32);
         }
         if(option == 4){
             audit.writeActionToFile("Prints Cardiologist records");
@@ -1092,6 +1095,9 @@ public class Service implements IGeneral{
         if(option == 6){
             audit.writeActionToFile("Prints Condition records");
             e.printEvAf(e.sortedEvAf());
+            //stream
+            System.out.println("Conditions:");
+            ConditionsStream();
         }
         if(option == 7){
             audit.writeActionToFile("Prints Appointment records");
@@ -1772,6 +1778,7 @@ public class Service implements IGeneral{
             e.addNewAf(x);
         }
 
+        //streams
         //PrintClientsofCertainAge(32);
         // ConditionsStream();
 
