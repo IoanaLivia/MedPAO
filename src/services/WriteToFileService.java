@@ -63,6 +63,7 @@ public class WriteToFileService {
     public void writeAdminToEvidenceFile(Administrator a) {
         try (FileWriter fileWriter = new FileWriter("src/files/AdminEvidence.csv", true)) {
             fileWriter.append(a.getCode());
+            fileWriter.append(",");
             fileWriter.append("\n");
             fileWriter.flush();
         } catch (Exception e) {
