@@ -134,4 +134,5 @@ public interface IGeneral{
 
     void ConditionsStream();
 
+//    void PrintIdClientsOverAge(int age);
 }

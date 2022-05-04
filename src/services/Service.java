@@ -1778,10 +1778,6 @@ public class Service implements IGeneral{
             e.addNewAf(x);
         }
 
-        //streams
-        //PrintClientsofCertainAge(32);
-        // ConditionsStream();
-
     }
 
 
@@ -1815,5 +1811,15 @@ public class Service implements IGeneral{
 
         System.out.println("Count is: " + conditions.stream().count());
     }
+
+//    @Override
+//    public void PrintIdClientsOverAge(int age){
+//        Predicate<Client> clientPredicate = c -> c.getAge() > 30;
+//        for (Client x : e.getEvCli()) {
+//            if (clientPredicate.test(x)) {
+//                System.out.println(x.getId());
+//            }
+//        }
+//    }
 
 }
