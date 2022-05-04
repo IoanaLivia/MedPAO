@@ -30,6 +30,7 @@ public class Evidence {
         this.evApp = new HashSet<>();
     }
 
+
     //getters
     public List<Medic> getEvM()
     {
