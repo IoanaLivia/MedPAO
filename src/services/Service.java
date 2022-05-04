@@ -1221,6 +1221,12 @@ public class Service implements IGeneral{
             audit.writeActionToFile("Prints records in Evidence csv file");
             WriteToFileService csvFileWriter = WriteToFileService.getInstance();
 
+            WriteToFileService.initializeClientEvidence();
+            WriteToFileService.initializeMedicEvidence();
+            WriteToFileService.initializeCardEvidence();
+            WriteToFileService.initializeOncEvidence();
+            WriteToFileService.initializeCondEvidence();
+            WriteToFileService.initializeAdminEvidence();
 
             try {
                 for (Client x : e.getEvCli()) {

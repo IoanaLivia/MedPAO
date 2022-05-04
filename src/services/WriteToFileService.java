@@ -21,6 +21,101 @@ public class WriteToFileService {
     private WriteToFileService() {
     }
 
+    public static void initializeClientEvidence() throws IOException{
+        FileWriter fileWriter = new FileWriter("src/files/ClientEvidence.csv", true);
+        fileWriter.append("Name");
+        fileWriter.append(",");
+        fileWriter.append("Surname");
+        fileWriter.append(",");
+        fileWriter.append("Age");
+        fileWriter.append(",");
+        fileWriter.append("Id");
+        fileWriter.append("\n");
+        fileWriter.flush();
+    }
+
+    public static void initializeMedicEvidence() throws IOException{
+        FileWriter fileWriter = new FileWriter("src/files/MedicEvidence.csv", true);
+        fileWriter.append("Name");
+        fileWriter.append(",");
+        fileWriter.append("Surname");
+        fileWriter.append(",");
+        fileWriter.append("Age");
+        fileWriter.append(",");
+        fileWriter.append("Id");
+        fileWriter.append(",");
+        fileWriter.append("Domain");
+        fileWriter.append(",");
+        fileWriter.append("Year");
+        fileWriter.append(",");
+        fileWriter.append("Month");
+        fileWriter.append(",");
+        fileWriter.append("Day");
+        fileWriter.append("\n");
+        fileWriter.flush();
+    }
+
+    public static void initializeCardEvidence() throws IOException{
+        FileWriter fileWriter = new FileWriter("src/files/CardiologistEvidence.csv", true);
+        fileWriter.append("Name");
+        fileWriter.append(",");
+        fileWriter.append("Surname");
+        fileWriter.append(",");
+        fileWriter.append("Age");
+        fileWriter.append(",");
+        fileWriter.append("Id");
+        fileWriter.append(",");
+        fileWriter.append("Domain");
+        fileWriter.append(",");
+        fileWriter.append("Year");
+        fileWriter.append(",");
+        fileWriter.append("Month");
+        fileWriter.append(",");
+        fileWriter.append("Day");
+        fileWriter.append(",");
+        fileWriter.append("Surgeries");
+        fileWriter.append("\n");
+        fileWriter.flush();
+    }
+    public static void initializeOncEvidence() throws IOException{
+        FileWriter fileWriter = new FileWriter("src/files/OncologistsEvidence.csv", true);
+        fileWriter.append("Name");
+        fileWriter.append(",");
+        fileWriter.append("Surname");
+        fileWriter.append(",");
+        fileWriter.append("Age");
+        fileWriter.append(",");
+        fileWriter.append("Id");
+        fileWriter.append(",");
+        fileWriter.append("Domain");
+        fileWriter.append(",");
+        fileWriter.append("Year");
+        fileWriter.append(",");
+        fileWriter.append("Month");
+        fileWriter.append(",");
+        fileWriter.append("Day");
+        fileWriter.append(",");
+        fileWriter.append("Surgeries");
+        fileWriter.append("\n");
+        fileWriter.flush();
+    }
+
+    public static void initializeCondEvidence() throws IOException{
+        FileWriter fileWriter = new FileWriter("src/files/ConditionEvidence.csv", true);
+        fileWriter.append("Name");
+        fileWriter.append(",");
+        fileWriter.append("GradeRisk");
+        fileWriter.append("\n");
+        fileWriter.flush();
+    }
+
+    public static void initializeAdminEvidence() throws IOException{
+        FileWriter fileWriter = new FileWriter("src/files/AdminEvidence.csv", true);
+        fileWriter.append("SecretCode");
+        fileWriter.append(",");
+        fileWriter.append("\n");
+        fileWriter.flush();
+    }
     public void writeClientToEvidenceFile(Client c) throws ClientsFileWritingException {
         try (FileWriter fileWriter = new FileWriter("src/files/ClientEvidence.csv", true)) {
             fileWriter.append("\n");
@@ -31,8 +126,8 @@ public class WriteToFileService {
             fileWriter.append(Integer.toString(c.getAge()));
             fileWriter.append(",");
             fileWriter.append(c.getId());
-            fileWriter.flush();
             fileWriter.append("\n");
+            fileWriter.flush();
         } catch (IOException e) {
             throw new ClientsFileWritingException("Something went wrong in writeClientToEvidenceFile", e);
         }
