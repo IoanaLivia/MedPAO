@@ -11,7 +11,7 @@ public class AuditService {
         try {
             this.w = new FileWriter("src/files/Audit.csv", true);
             w.append("Action");
-            w.append(" ");
+            w.append(",");
             w.append("Time");
             w.append("\n");
         }
