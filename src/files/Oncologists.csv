@@ -1,0 +1,16 @@
+name,surname,age,id,specialitate,year,month,day,nrSurgeries
+Ionescu,Marius,56,3003001,oncologie,2020,3,10,21
+Popescu,Elena,45,3003002,oncologie,2018,4,13,22
+Georgescu,Daria,76,3003003,oncologie,2021,5,12,34
+Gherghescu,Catalin,60,3003004,oncologie,2018,6,11,23
+Tertescu,Cristi,65,3003005,oncologie,2020,7,11,22
+Marculescu,David,35,3003006,oncologie,2022,8,15,4
+Tritescu,Alex,39,3003007,oncologie,2020,9,14,30
+Anghelache,Alexandru,38,3003008,oncologie,2018,1,15,24
+Preda,Tania,46,3003009,oncologie,2017,2,15,43
+Popescu,Marian,65,3003010,oncologie,2017,2,14,25
+Constatin,Rares,67,3003011,oncologie,2017,11,11,57
+Ene,Cosmin,57,3003012,oncologie,2018,12,11,45
+Susu,Cosmin,47,3003013,oncologie,2019,4,17,58
+Soc,Sonia,49,3003014,oncologie,2018,5,21,23
+Preda,Andrei,52,3003015,oncologie,2008,10,19,30
