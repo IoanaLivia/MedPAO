@@ -1,13 +1,19 @@
 package services;
+import config.DatabaseConfiguration;
 import evidences.Evidence;
 import exceptions.ClientsFileReadingException;
 import exceptions.ClientsFileWritingException;
 import interfaces.*;
 import entities.*;
 import entities.specialists.*;
+import repository.AdminRepository;
+import repository.ClientRepository;
+import repository.ConditionRepository;
+import repository.MedicRepository;
 import struct.Adresa;
 import utility.DisplayReviews;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -18,7 +24,6 @@ public class Service implements IGeneral{
     Adresa clinicAddress = new Adresa("Romania", "Bucuresti", "Strada PAO", "38290", 10);
     Evidence e = new Evidence();
     AuditService audit = new AuditService();
-
 
     //implementing logins
     @Override
@@ -573,7 +578,7 @@ public class Service implements IGeneral{
 
     //exists
     @Override
-    public boolean existsCli(Client c){
+    public boolean existsCli(Client c) {
         for(Client x: e.getEvCli()){
             if(c.equals(x))
             {
@@ -582,6 +587,33 @@ public class Service implements IGeneral{
         }
         return false;
     }
+
+    //exists: By id, sql
+
+    @Override
+    public boolean existsCliById(String id){ //sql
+        if (clientRepo.getClientbyId(id) == null) return false;
+        return true;
+    }
+
+    @Override
+    public boolean existsMedicById(String id){ //sql
+        if (medicRepo.getMedicbyId(id) == null) return false;
+        return true;
+    }
+
+    @Override
+    public boolean existsAdminById(String cod){
+        if(adminRepo.getAdminbyId(cod) == null) return false;
+        return true;
+    }
+
+    @Override
+    public boolean existsCondById(String cod){
+        if(condRepo.getCondbyId(cod) == null) return false;
+        return true;
+    }
+
     @Override
     public boolean existsMed(Medic m){
         for(Medic x: e.getEvM()){
@@ -622,7 +654,6 @@ public class Service implements IGeneral{
         }
         return false;
     }
-
     @Override
     public boolean existsAf(Afectiune a){
         ArrayList<Afectiune> ar = new ArrayList<>(e.getEvAf());
@@ -681,9 +712,19 @@ public class Service implements IGeneral{
     }
 
     @Override
+    public void regClientDB(){
+        clientRepo.insertClientProc(inputLogCli());
+    }
+
+    @Override
     public void regMedic() throws IOException{
         audit.writeActionToFile("Registered as Medic");
         e.addNewMed(inputLogMed());
+    }
+
+    @Override
+    public void regMedicDB(){
+        medicRepo.insertMedicProc(inputLogMed());
     }
 
     @Override
@@ -705,9 +746,19 @@ public class Service implements IGeneral{
     }
 
     @Override
+    public void regCondDB(){
+        condRepo.insertCondProc(inputAf());
+    }
+
+    @Override
     public void regAdmin() throws IOException{
         audit.writeActionToFile("Registered as Admin");
         e.addNewAdmin(inputLogAdmin());
+    }
+
+    @Override
+    public void regAdminDB(){
+        adminRepo.insertAdminProc(inputLogAdmin());
     }
 
     @Override
@@ -719,6 +770,15 @@ public class Service implements IGeneral{
         e.printEvMed();
         e.printEvAdmin();
     }
+
+    @Override
+    public void showAllRecordsDB(){
+        clientRepo.displayClients();
+        medicRepo.displayMedics();
+        condRepo.displayConditions();
+        adminRepo.displayAdmins();
+    }
+
 
     @Override
     public int getClientOpt(){
@@ -1262,8 +1322,9 @@ public class Service implements IGeneral{
                 csvFileWriter.writeSpecialistToEvidenceFile(x, Oncolog.class);
             }
 
+           // parseOptAdmin(getAdminOpt());
         }
-        if(option != 35 && option != 36)
+        if(option != 35)
         {
             System.out.println();
             try {
@@ -1672,7 +1733,8 @@ public class Service implements IGeneral{
     @Override
     public boolean boot() throws IOException {
         audit.writeActionToFile("Boot");
-
+        //sql: creeam baza de date
+        //CreateTableClient();
         printIntroduction();
 
         Scanner scanner;
@@ -1821,5 +1883,732 @@ public class Service implements IGeneral{
 //            }
 //        }
 //    }
+//
+//
+    //-------------------------------------------------SQL-------------------------------------------------------
 
+    ClientRepository clientRepo = new ClientRepository();
+    MedicRepository medicRepo = new MedicRepository();
+    AdminRepository adminRepo = new AdminRepository();
+    ConditionRepository condRepo = new ConditionRepository();
+
+    //---------------------------------------------Client-------------------------------------------------------
+
+    //create table
+    @Override
+    public void createClientTableExec(){
+
+        clientRepo.createClientTable();
+
+        DatabaseConfiguration.closeDatabaseConnection();
+
+    }
+
+    //drop table
+    @Override
+    public void deleteClientTableExec(){
+
+        clientRepo.deleteClientTable();
+
+        DatabaseConfiguration.closeDatabaseConnection();
+
+    }
+
+    //delete instance
+    @Override
+    public void deleteClientInstance(String id_to_delete){
+
+        clientRepo.deleteClient(id_to_delete);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+
+    }
+
+    //insert : PreparedStatement : takes name, surname, age, id params
+    public void insertIntoClient(String name, String surname, int age, String id){
+
+        clientRepo.insertClientSql(name, surname, age, id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    //insert : CallableStatement & stored procedure : takes Client instance as parameter
+    public void insertIntoClientProc(Client c){
+
+        clientRepo.insertClientProc(c);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    //get : cu PreparedStatement: takes id param
+    public void getClientInstancebyId(String id){
+        clientRepo.getClientbyId(id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    //display: all
+
+    @Override
+    public void displayClients(){
+        clientRepo.displayClients();
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    //display: instance
+
+    public void displayClient(String id){
+        clientRepo.displayClient(id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    //update params of Client: Age, Name, Surname, Id
+
+    public void updateClientAgeExec(String id, int new_age){
+        clientRepo.updateClientAge(new_age, id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public void updateClientNameExec(String id, String name){
+        clientRepo.updateClientName(name, id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public void updateClientSurnameExec(String id, String surname){
+        clientRepo.updateClientSurname(surname, id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public void updateClientIdExec(String id, String new_id){
+        clientRepo.updateClientId(new_id, id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public boolean existsClient(String id){
+        if(clientRepo.getClientbyId(id) == null) return false;
+        return true;
+    }
+
+
+    //---------------------------------------------Medic-------------------------------------------------------
+
+    //create table
+    public void createMedicTableExec(){
+
+        medicRepo.createMedicTable();
+
+        DatabaseConfiguration.closeDatabaseConnection();
+
+    }
+
+    //delete: drop table
+    public void deleteMedicTableExec(){
+
+        medicRepo.deleteMedicTable();
+
+        DatabaseConfiguration.closeDatabaseConnection();
+
+    }
+
+    //delete instance
+    public void deleteMedicInstance(String id_to_delete){
+
+        medicRepo.deleteMedic(id_to_delete);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+
+    }
+
+    //insert : CallableStatement & stored procedure : takes Medic instance as parameter
+    public void insertIntoMedicProc(Medic m){
+
+        medicRepo.insertMedicProc(m);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    //insert : PreparedStatement : takes name, surname, age, id params
+    public void insertIntoMedic(String name, String surname, int age, String id, String specialitate, int year, int month, int day){
+
+        medicRepo.insertMedicSql(name, surname, age, id, specialitate, year, month, day);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    //display: all
+
+    @Override
+    public void displayMedics(){
+        medicRepo.displayMedics();
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    //      : instance
+    public void displayMedic(String id){
+        medicRepo.displayMedic(id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public void updateMedicAgeExec(String id, int new_age){
+        medicRepo.updateMedicAge(new_age, id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public void updateMedicNameExec(String id, String name){
+        medicRepo.updateMedicName(name, id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public void updateMedicSurnameExec(String id, String surname){
+        medicRepo.updateMedicSurname(surname, id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public void updateMedicIdExec(String id, String new_id){
+        medicRepo.updateMedicId(new_id, id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public void updateMedicSpecExec(String id, String spec){
+        medicRepo.updateMedicSpec(spec, id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public void updateMedicYearExec(String id, int new_year){
+        medicRepo.updateMedicYear(new_year, id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public void updateMedicMonthExec(String id, int new_month){
+        medicRepo.updateMedicMonth(new_month, id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public void updateMedicDayExec(String id, int new_day){
+        medicRepo.updateMedicDay(new_day, id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public boolean existsMedic(String id){
+        if(medicRepo.getMedicbyId(id) == null) return false;
+        return true;
+    }
+
+
+
+    //---------------------------------------------Admin--------------------------------------------------------
+
+    //table + delete
+    public void createAdminTableExec(){
+        adminRepo.createAdminTable();
+
+        DatabaseConfiguration.closeDatabaseConnection();
+
+    }
+
+    public void dropAdminTableExec(){
+        adminRepo.deleteAdminTable();
+
+        DatabaseConfiguration.closeDatabaseConnection();
+
+    }
+
+    public void deleteAdmin(String cod){
+        adminRepo.deleteAdmin(cod);
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    //insert
+
+    public void insertIntoAdminProc(Administrator a){
+
+        adminRepo.insertAdminProc(a);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    //display
+
+    public void displayAdmin(String id){
+        adminRepo.displayAdmin(id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public void displayAdmins(){
+        adminRepo.displayAdmins();
+    }
+
+    //update
+
+    public void updateAdminIdExec(String id, String new_id){
+        adminRepo.updateAdminCode(new_id, id);
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public boolean existsAdmin(String nume){
+        if(adminRepo.getAdminbyId(nume) == null) return false;
+        return true;
+    }
+
+
+
+
+    //--------------------------------------------Condition-------------------------------------------------------
+
+    public void createCondTableExec(){
+        condRepo.createConditionTable();
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+    public void dropCondTableExec(){
+        condRepo.deleteConditionTable();
+
+        DatabaseConfiguration.closeDatabaseConnection();
+
+    }
+
+    public void deleteCondition(String name){
+        condRepo.deleteCondition(name);
+    }
+
+    //insert
+    @Override
+    public void addConditionProc(Afectiune a){
+        condRepo.insertCondProc(a);
+    }
+
+    @Override
+    public void addCondition(String name, int grade) {
+        condRepo.insertCondSql(name, grade);
+    }
+
+    @Override
+    public void displayConditions(){
+        condRepo.displayConditions();
+
+        DatabaseConfiguration.closeDatabaseConnection();
+    }
+
+//    @Override
+//    public boolean existsCond(String nume){
+//        if(condRepo.getCondbyId(nume) == null) return false;
+//        return true;
+//    }
+
+
+    //----------------------------------------------SQL Menu--------------------------------------------------
+
+    @Override
+    public void printMenuSql(){
+        //System.out.print("---------------------------------SQL------------------------------------\n");
+        System.out.print("Welcome to the new SQL Menu. Here are the functionalities available on our database:\n");
+        System.out.print("--------------------------------------Display---------------------------------------\n");
+        System.out.print("1: Show all records.\n");
+        System.out.print("2: Client records.\n");
+        System.out.print("3: Medic records.\n");
+        System.out.print("4: Conditions records.\n");
+        System.out.print("5: Admin records.\n");
+        System.out.print("---------------------------------------Add---------------------------------------\n");
+        System.out.print("6: Add new Client.\n");
+        System.out.print("7: Add new Medic.\n");
+        System.out.print("8: Add new Condition.\n");
+        System.out.print("9: Add new Admin.\n");
+        System.out.print("--------------------------------------Delete---------------------------------------\n");
+        System.out.print("10: Delete Client.\n");
+        System.out.print("11: Delete Medic.\n");
+        System.out.print("12: Delete Condition.\n");
+        System.out.print("13: Delete Admin.\n");
+        System.out.print("--------------------------------------Create---------------------------------------\n");
+        System.out.print("14: Create Client Table.\n");
+        System.out.print("15: Create Medic Table.\n");
+        System.out.print("16: Create Condition Table.\n");
+        System.out.print("17: Create Admin Table.\n");
+        System.out.print("-------------------------------------Drop Table---------------------------------------\n");
+        System.out.print("18: Drop Client Table.\n");
+        System.out.print("19: Drop Medic Table.\n");
+        System.out.print("20: Drop Condition Table.\n");
+        System.out.print("21: Drop Admin Table.\n");
+        System.out.print("--------------------------------------Update--------------------------------------\n");
+        System.out.print("------------------------------------- Medic -------------------------------------\n");
+        System.out.print("22: Update Medic Id.\n");
+        System.out.print("23: Update Medic Name.\n");
+        System.out.print("24: Update Medic Surname.\n");
+        System.out.print("25: Update Medic Age.\n");
+        System.out.print("26: Update Medic Domain (specialitate).\n");
+        System.out.print("27: Update Medic Date: Year.\n");
+        System.out.print("28: Update Medic Date: Month.\n");
+        System.out.print("29: Update Medic Date: Day.\n");
+        System.out.print("------------------------------------- Client ------------------------------------\n");
+        System.out.print("30: Update Client Id.\n");
+        System.out.print("31: Update Client Name.\n");
+        System.out.print("32: Update Client Surname.\n");
+        System.out.print("33: Update Client Age.\n");
+        System.out.print("------------------------------------- Admin -------------------------------------\n");
+        System.out.print("34: Update Admin's secret code.\n");
+        System.out.print("------------------------------------ Condition -----------------------------------\n");
+        System.out.print("35: Update Condition name (id).\n");
+        System.out.print("36: Update Condition risk.\n");
+        System.out.print("--------------------------------- Display: instance -------------------------------\n");
+        System.out.print("37: Display Client instance.\n");
+        System.out.print("38: Display Medic instance.\n");
+        System.out.print("39: Display Condition instance.\n");
+        System.out.print("40: Display Admin instance.\n");
+        System.out.print("--------------------------------------- Exists --------------------------------------\n");
+        System.out.print("41: Check if Client instance exists.\n");
+        System.out.print("42: Check if Medic instance exists.\n");
+        System.out.print("43: Check if Condition instance exists.\n");
+        System.out.print("44: Check if Admin instance exists.\n");
+        System.out.print("--------------------------------------- Exit --------------------------------------\n");
+        System.out.print("45: Exit.\n");
+
+    }
+
+    @Override
+    public void parseOptSql(int option){
+        if(option == 1){
+            showAllRecordsDB();
+        }
+        if(option == 2){
+            displayClients();
+        }
+        if(option == 3){
+            displayMedics();
+        }
+        if(option == 4){
+            displayConditions();
+        }
+        if(option == 5){
+            displayAdmins();
+        }
+        if(option == 6){
+            regClientDB();
+        }
+        if(option == 7){
+            regMedicDB();
+        }
+        if(option == 8){
+            regCondDB();
+        }
+        if(option == 9){
+            regAdminDB();
+        }
+        if(option == 10){
+            System.out.println("Enter client id:\n");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            deleteClientInstance(op);
+        }
+        if(option == 11){
+            System.out.println("Enter medic id:\n");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            deleteMedicInstance(op);
+        }
+        if(option == 12){
+            System.out.println("Enter condition name:\n");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            deleteCondition(op);
+        }
+        if(option == 13){
+            System.out.println("Enter admin secret code:\n");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            deleteAdmin(op);
+
+        }
+        if(option == 14){
+            createClientTableExec();
+        }
+        if(option == 15){
+            createMedicTableExec();
+        }
+        if(option == 16){
+            createCondTableExec();
+        }
+        if(option == 17){
+            createAdminTableExec();
+        }
+        if(option == 18){
+            deleteClientTableExec();
+        }
+        if(option == 19){
+            deleteMedicTableExec();
+        }
+        if(option == 20){
+            dropCondTableExec();
+        }
+        if(option == 21){
+            dropAdminTableExec();
+        }
+        if(option == 22){
+            System.out.println("Enter new id:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            System.out.println("Enter old id:");
+            String op2 = scanner.nextLine();
+            updateMedicIdExec(op2,op);
+        }
+        if(option == 23){
+            System.out.println("Enter new name:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            System.out.println("Enter id:");
+            String op2 = scanner.nextLine();
+            updateMedicNameExec(op2,op);
+        }
+        if(option == 24){
+            System.out.println("Enter new surname:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            System.out.println("Enter id:\n");
+            String op2 = scanner.nextLine();
+            updateMedicNameExec(op2,op);
+        }
+        if(option == 25){
+            System.out.println("Enter new age:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            int op = scanner.nextInt();
+            System.out.println("Enter id:");
+            String op2 = scanner.nextLine();
+            updateMedicAgeExec(op2,op);
+        }
+        if(option == 26){
+            System.out.println("Enter new domain: ");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            System.out.println("Enter id:");
+            String op2 = scanner.nextLine();
+            updateMedicSpecExec(op2,op);
+        }
+        if(option == 27){
+            System.out.println("Enter new year:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            int op = scanner.nextInt();
+            System.out.println("Enter id:");
+            String op2 = scanner.nextLine();
+            updateMedicYearExec(op2,op);
+        }
+        if(option == 28){
+            System.out.println("Enter new month:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            int op = scanner.nextInt();
+            System.out.println("Enter id:");
+            String op2 = scanner.nextLine();
+            updateMedicMonthExec(op2,op);
+        }
+        if(option == 29){
+            System.out.println("Enter new day:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            int op = scanner.nextInt();
+            System.out.println("Enter id:");
+            String op2 = scanner.nextLine();
+            updateMedicDayExec(op2,op);
+        }
+        if(option == 30){
+            System.out.println("Enter new id:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            System.out.println("Enter old id:");
+            String op2 = scanner.nextLine();
+            updateClientIdExec(op2,op);
+        }
+        if(option == 31){
+            System.out.println("Enter new name:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            System.out.println("Enter id:\n");
+            String op2 = scanner.nextLine();
+            updateClientNameExec(op2,op);
+        }
+        if(option == 32){
+            System.out.println("Enter new surname:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            System.out.println("Enter id:\n");
+            String op2 = scanner.nextLine();
+            updateClientNameExec(op2,op);
+        }
+        if(option == 33){
+            System.out.println("Enter new age:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            int op = scanner.nextInt();
+            System.out.println("Enter id:\n");
+            String op2 = scanner.nextLine();
+            updateClientAgeExec(op2,op);
+        }
+        if(option == 34){
+            System.out.println("Enter new secret code:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            System.out.println("Enter old code:");
+            String op2 = scanner.nextLine();
+            updateAdminIdExec(op2,op);
+        }
+        if(option == 35){
+            System.out.println("Enter new name:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            System.out.println("Enter old name (old id):");
+            String op2 = scanner.nextLine();
+            condRepo.updateCondName(op, op2);
+        }
+        if(option == 36){
+            System.out.println("Enter new risk:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            int op = scanner.nextInt();
+            System.out.println("Enter id:");
+            String op2 = scanner.nextLine();
+            condRepo.updateCondRisk(op,op2);
+        }
+        if(option == 37){
+            System.out.println("Enter id:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            displayClient(op);
+        }
+        if(option == 38){
+            System.out.println("Enter id:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            displayMedic(op);
+        }
+        if(option == 39){
+            System.out.println("Enter id:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            condRepo.displayCond(op);
+        }
+        if(option == 40){
+            System.out.println("Enter id:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            displayAdmin(op);
+        }
+        if(option == 41){
+            System.out.println("Enter id:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            if(existsCliById(op)) displayClient(op);
+            else System.out.println("The Client does not exist.");
+        }
+        if(option == 42){
+            System.out.println("Enter id:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            if(existsMedicById(op)) displayMedic(op);
+            else System.out.println("The Medic does not exist.");
+        }
+        if(option == 43){
+            System.out.println("Enter name:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            if(existsCondById(op)) condRepo.displayCond(op);
+            else System.out.println("The Condition does not exist.");
+        }
+        if(option == 44){
+            System.out.println("Enter secret code:");
+            Scanner scanner;
+            scanner = new Scanner(System.in);
+            String op = scanner.nextLine();
+            if(existsAdminById(op)) adminRepo.displayAdmin(op);
+            else System.out.println("The Admin does not exist.");
+        }
+        if(option == 45){
+            System.out.print("Thank you for using our platform. See you soon!");
+        }
+
+        if(option != 45)
+        {
+            System.out.println();
+            printMenuSql();
+            parseOptSql(getSqlOpt());
+        }
+
+    }
+
+    @Override
+    public int getSqlOpt(){
+        printMenuSql();
+        Scanner scanner;
+        scanner = new Scanner(System.in);
+        int option = scanner.nextInt();
+        if(option < 1 || option > 45){
+            System.out.println(ERROR_RANGE);
+            return -1;
+        }
+        else
+        {
+            return option;
+        }
+    }
+
+    @Override
+    public boolean sql(){
+        System.out.println("Would you like to try the DATABASE DEMO? Type Yes or No.");
+        Scanner scanner;
+        scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        System.out.println("\n");
+
+        if(input.equals("Yes")){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    @Override
+    public void beginsql(){
+        int x = getSqlOpt();
+        while(x == -1) x = getSqlOpt();
+        parseOptSql(x);
+    }
 }

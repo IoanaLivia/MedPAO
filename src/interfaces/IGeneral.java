@@ -52,6 +52,7 @@ public interface IGeneral{
 
     void printMenuAdmin() throws IOException;
 
+
     //others
 
     void printIntroduction();
@@ -135,4 +136,58 @@ public interface IGeneral{
     void ConditionsStream();
 
 //    void PrintIdClientsOverAge(int age);
+
+    //----------------------------------------------------SQL----------------------------------------------
+
+    //get
+
+    boolean existsCliById(String id);
+
+    boolean existsMedicById(String id);
+
+    boolean existsAdminById(String cod);
+
+    boolean existsCondById(String cod);
+
+
+    //add
+
+    void regClientDB();
+
+    void regMedicDB();
+
+    void regCondDB();
+
+    void regAdminDB();
+
+    //display
+
+    void showAllRecordsDB();
+
+    void displayClients();
+
+    void displayMedics();
+
+    void displayAdmins();
+
+    void displayConditions();
+
+
+    //delete instances
+
+    void parseOptSql(int option);
+
+    int getSqlOpt();
+
+    void printMenuSql();
+
+    //
+    void deleteClientInstance(String id_to_delete);
+    void createClientTableExec();
+    void deleteClientTableExec();
+    void addCondition(String name, int grade);
+   // boolean existsCond(String nume);
+    void addConditionProc(Afectiune a);
+    boolean sql();
+    void beginsql();
 }
