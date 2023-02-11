@@ -1,5 +1,7 @@
 # MedPAO Clinic - Advanced Object Oriented Programming Project
 
+![](https://github.com/IoanaLivia/MedPAO/blob/master/Assets/MedPao.png)
+
 ## Descriere
 
   Proiectul implementeaza functionalitatiile gestionarii unei clinici. Este impartit in doua medii de lucru. Primul presupune lucrul cu o baza de date dezvoltata in
